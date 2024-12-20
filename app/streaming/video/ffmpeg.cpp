@@ -799,21 +799,23 @@ void FFmpegVideoDecoder::stringifyVideoStats(VIDEO_STATS& stats, char* output, i
                 return;
             }
 
-            // offset += ret;
+            offset += ret;
         }
 
-        // ret = snprintf(&output[offset],
-        //                length - offset,
-        //                "Incoming frame rate from network: %.2f FPS\n"
-        //                "Decoding frame rate: %.2f FPS\n"
-        //                "Rendering frame rate: %.2f FPS\n",
-        //                stats.receivedFps,
-        //                stats.decodedFps,
-        //                stats.renderedFps);
-        // if (ret < 0 || ret >= length - offset) {
-        //     SDL_assert(false);
-        //     return;
-        // }
+        ret = snprintf(&output[offset],
+                       length - offset,
+                       ""
+                       // "Incoming frame rate from network: %.2f FPS\n"
+                       // "Decoding frame rate: %.2f FPS\n"
+                       // "Rendering frame rate: %.2f FPS\n",
+                       // stats.receivedFps,
+                       // stats.decodedFps,
+                       // stats.renderedFps
+                       );
+        if (ret < 0 || ret >= length - offset) {
+            SDL_assert(false);
+            return;
+        }
 
         offset += ret;
     }
