@@ -40,17 +40,17 @@ set BUILD_FOLDER=%BUILD_ROOT%\build-%BUILD_CONFIG%
 set INSTALLER_FOLDER=%BUILD_ROOT%\installer-%BUILD_CONFIG%
 set /p VERSION=<%SOURCE_ROOT%\app\version.txt
 
-rem Ensure that all architectures have been built before the final bundle
+rem Ensure that x64 architecture has been built before creating the bundle
 if not exist "%BUILD_ROOT%\build-x64-%BUILD_CONFIG%\Moonlight.msi" (
     echo Unable to build bundle - missing binaries for %BUILD_CONFIG% x64
     echo You must run 'build-arch.bat %BUILD_CONFIG% x64' first
     exit /b 1
 )
-@REM if not exist "%BUILD_ROOT%\build-arm64-%BUILD_CONFIG%\Moonlight.msi" (
-@REM     echo Unable to build bundle - missing binaries for %BUILD_CONFIG% arm64
-@REM     echo You must run 'build-arch.bat %BUILD_CONFIG% arm64' first
-@REM     exit /b 1
-@REM )
+if not exist "%BUILD_ROOT%\build-arm64-%BUILD_CONFIG%\Moonlight.msi" (
+    echo Unable to build bundle - missing binaries for %BUILD_CONFIG% arm64
+    echo You must run 'build-arch.bat %BUILD_CONFIG% arm64' first
+    exit /b 1
+)
 
 echo Cleaning output directories
 rmdir /s /q %BUILD_FOLDER%
